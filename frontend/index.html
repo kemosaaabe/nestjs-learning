@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A local playground for the tasks and users API."
+    />
+    <title>Tasks & users · API playground</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <main>
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">LOCAL DEVELOPMENT / NESTJS</p>
+          <h1>API playground<span>.</span></h1>
+          <p class="subtitle">
+            A little workspace to put your users and tasks API to work.
+          </p>
+        </div>
+        <div class="connection">
+          <span class="connection-dot"></span> localhost:3000
+        </div>
+      </header>
+
+      <div class="toolbar">
+        <div class="tabs" role="tablist" aria-label="Resources">
+          <button
+            id="tasks-tab"
+            role="tab"
+            aria-selected="true"
+            aria-controls="tasks-panel"
+          >
+            Tasks <span id="task-count">0</span>
+          </button>
+          <button
+            id="users-tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="users-panel"
+            tabindex="-1"
+          >
+            Users <span id="user-count">0</span>
+          </button>
+        </div>
+        <button id="refresh" class="secondary">↻ Refresh data</button>
+      </div>
+      <p id="feedback" role="status" aria-live="polite">
+        Connecting to your API…
+      </p>
+
+      <section
+        id="tasks-panel"
+        role="tabpanel"
+        aria-labelledby="tasks-tab"
+        class="workspace"
+      >
+        <aside class="panel form-panel">
+          <div class="section-heading">
+            <span class="section-number">01</span>
+            <h2 id="task-form-title">Create a task</h2>
+          </div>
+          <p class="hint">Give something a place on your list.</p>
+          <form id="task-form">
+            <label for="task-title">Title</label>
+            <input
+              id="task-title"
+              name="title"
+              placeholder="What needs to get done?"
+              required
+              maxlength="200"
+            />
+            <label for="task-description">Description</label>
+            <textarea
+              id="task-description"
+              name="description"
+              placeholder="A few helpful details…"
+              rows="4"
+            ></textarea>
+            <label for="task-user">Assigned to</label>
+            <select id="task-user" name="userId">
+              <option value="">Unassigned</option>
+            </select>
+            <div id="task-status-field" hidden>
+              <label for="task-status">Status</label>
+              <select id="task-status" name="status">
+                <option value="todo">To do</option>
+                <option value="in_progress">In progress</option>
+                <option value="done">Done</option>
+              </select>
+            </div>
+            <div class="form-actions">
+              <button id="save-task" type="submit" class="primary">
+                Create task <span>↗</span></button
+              ><button id="cancel-edit" type="button" class="secondary" hidden>
+                Cancel
+              </button>
+            </div>
+          </form>
+          <p class="endpoint" id="task-form-endpoint">POST /tasks</p>
+        </aside>
+        <div class="panel list-panel">
+          <div class="list-heading">
+            <div class="section-heading">
+              <span class="section-number">02</span>
+              <h2>Your tasks</h2>
+            </div>
+            <span class="small-label">LIVE API DATA</span>
+          </div>
+          <div class="list-tools">
+            <label for="task-filter" class="sr-only"
+              >Filter tasks by user</label
+            >
+            <select id="task-filter">
+              <option value="">All users</option>
+            </select>
+            <form id="task-lookup" class="lookup">
+              <label for="task-id" class="sr-only">Task ID</label
+              ><input
+                id="task-id"
+                type="number"
+                min="1"
+                step="1"
+                placeholder="Task ID"
+                required
+              /><button type="submit" class="secondary">Inspect</button>
+            </form>
+          </div>
+          <div id="task-list" class="resource-list"></div>
+        </div>
+      </section>
+
+      <section
+        id="users-panel"
+        role="tabpanel"
+        aria-labelledby="users-tab"
+        class="workspace"
+        hidden
+      >
+        <aside class="panel form-panel">
+          <div class="section-heading">
+            <span class="section-number">01</span>
+            <h2>Create a user</h2>
+          </div>
+          <p class="hint">Add a person, then assign them a task.</p>
+          <form id="user-form">
+            <label for="user-name">Name</label>
+            <input
+              id="user-name"
+              name="name"
+              placeholder="Alex Johnson"
+              required
+              maxlength="100"
+            />
+            <label for="user-email">Email address</label>
+            <input
+              id="user-email"
+              name="email"
+              type="email"
+              placeholder="alex@example.com"
+              required
+            />
+            <button type="submit" class="primary">
+              Create user <span>↗</span>
+            </button>
+          </form>
+          <p class="endpoint">POST /users</p>
+        </aside>
+        <div class="panel list-panel">
+          <div class="list-heading">
+            <div class="section-heading">
+              <span class="section-number">02</span>
+              <h2>Your users</h2>
+            </div>
+            <span class="small-label">LIVE API DATA</span>
+          </div>
+          <form id="user-lookup" class="lookup user-lookup">
+            <label for="user-id" class="sr-only">User ID</label
+            ><input
+              id="user-id"
+              type="number"
+              min="1"
+              step="1"
+              placeholder="User ID"
+              required
+            /><button type="submit" class="secondary">Inspect</button>
+          </form>
+          <div id="user-list" class="resource-list"></div>
+        </div>
+      </section>
+
+      <section class="response-panel" aria-labelledby="response-heading">
+        <div class="response-header">
+          <div>
+            <span class="terminal-icon">&gt;_</span>
+            <h2 id="response-heading">API response</h2>
+          </div>
+          <span id="response-status">Waiting for a request</span>
+        </div>
+        <p id="response-request">Send a request to see the response here.</p>
+        <pre id="response-body" tabindex="0" aria-label="JSON response">{}</pre>
+      </section>
+      <footer>
+        <span>Small interface. Real requests.</span
+        ><span>Data lives in memory and resets when the API restarts.</span>
+      </footer>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
