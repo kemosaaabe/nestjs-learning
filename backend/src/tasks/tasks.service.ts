@@ -4,12 +4,9 @@ import type {
   UpdateTaskDto,
   Task,
 } from './interfaces/tasks.interface.js';
-import { LoggerService } from '../logger/logger.service.js';
 
 @Injectable()
 export class TasksService {
-  constructor(private readonly loggerService: LoggerService) {}
-
   private tasks: Task[] = [];
   private taskNextId = 1;
 
@@ -34,8 +31,6 @@ export class TasksService {
 
     this.tasks.push(newTask);
 
-    this.loggerService.log(`Task created: ${newTaskId} `);
-
     return newTask;
   }
 
@@ -56,15 +51,11 @@ export class TasksService {
       return task;
     });
 
-    this.loggerService.log(`Task updated: ${taskId} `);
-
     return updatedTask;
   }
 
   deleteTask(taskId: number) {
     this.tasks = this.tasks.filter(({ id }) => id !== taskId);
-
-    this.loggerService.log(`Task deleted: ${taskId} `);
   }
 
   getUserTasks(userId: number) {
