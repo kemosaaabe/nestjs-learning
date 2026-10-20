@@ -13,10 +13,8 @@ import type {
   CreateTaskDto,
   UpdateTaskDto,
 } from './interfaces/tasks.interface.js';
-import { HttpExceptionFilter } from '../common/filters/http-exception.filter.js';
 
 @Controller('tasks')
-@UseFilters(HttpExceptionFilter)
 export class TaskController {
   constructor(private readonly tasksService: TasksService) {}
 
