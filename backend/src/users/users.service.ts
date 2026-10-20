@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import type { CreateUserDto, User } from './interfaces/user.interface.js';
 import { LoggerService } from '../logger/logger.service.js';
 
@@ -16,7 +16,11 @@ export class UsersService {
   getUser(userId: number) {
     const user = this.users.find(({ id }) => id === userId);
 
-    return user || null;
+    if (!user) {
+      throw new NotFoundException('Task not found');
+    }
+
+    return user;
   }
 
   createUser(user: CreateUserDto) {
