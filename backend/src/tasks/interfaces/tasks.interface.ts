@@ -1,4 +1,6 @@
-type TaskStatus = 'todo' | 'in_progress' | 'done';
+export const taskStatuses = ['todo', 'in_progress', 'done'] as const;
+
+export type TaskStatus = (typeof taskStatuses)[number];
 
 export interface Task {
   id: number;
@@ -7,5 +9,3 @@ export interface Task {
   status: TaskStatus;
   userId: number | null;
 }
-
-export type UpdateTaskDto = Omit<Partial<Task>, 'id'>;
