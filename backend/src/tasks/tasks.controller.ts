@@ -9,9 +9,11 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service.js';
-import { CreateTaskDto } from './dto/create-task.dto.js';
-import { UpdateTaskDto } from './dto/update-task.dto.js';
+import type { CreateTaskDto } from './schemas/create-task.schema.js';
+import type { UpdateTaskDto } from './schemas/update-task.schema.js';
+import { createTaskSchema } from './schemas/create-task.schema.js';
 import { PositiveIntPipe } from '../common/pipes/positive-int.pipe.js';
+import { updateTaskSchema } from './schemas/update-task.schema.js';
 
 @Controller('tasks')
 export class TaskController {
@@ -28,13 +30,13 @@ export class TaskController {
   }
 
   @Post()
-  createTask(@Body() taskDto: CreateTaskDto) {
+  createTask(@Body({ schema: createTaskSchema }) taskDto: CreateTaskDto) {
     return this.tasksService.createTask(taskDto);
   }
 
   @Patch(':id')
   updateTask(
-    @Body() task: UpdateTaskDto,
+    @Body({ schema: updateTaskSchema }) task: UpdateTaskDto,
     @Param('id', ParseIntPipe) taskId: number,
   ) {
     return this.tasksService.updateTask(taskId, task);

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateTaskDto } from './dto/create-task.dto.js';
-import { UpdateTaskDto } from './dto/update-task.dto.js';
+import type { CreateTaskDto } from './schemas/create-task.schema.js';
+import type { UpdateTaskDto } from './schemas/update-task.schema.js';
 import type { Task } from './interfaces/tasks.interface.js';
 
 @Injectable()
