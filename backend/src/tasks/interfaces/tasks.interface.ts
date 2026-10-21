@@ -8,6 +8,4 @@ export interface Task {
   userId: number | null;
 }
 
-export type CreateTaskDto = Omit<Task, 'id' | 'status'>;
-
 export type UpdateTaskDto = Omit<Partial<Task>, 'id'>;
