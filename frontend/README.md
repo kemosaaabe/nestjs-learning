@@ -27,6 +27,8 @@ The development server proxies `/api` to `http://127.0.0.1:3000`, so no backend 
 - Change task status and view a user's tasks.
 - See the request method, endpoint, HTTP status, and JSON response.
 
+Forms intentionally skip frontend validation and preserve entered text so you can test backend validation with empty, negative, or malformed values. An empty lookup ID requests `/tasks/` or `/users/`, which are collection routes rather than routes with an ID parameter.
+
 Data is stored in memory by the backend and resets when it restarts. User editing and deletion are unavailable because the API does not expose those endpoints.
 
 Run `npm run build` to type-check and build the frontend. The generated `dist` directory needs an `/api` reverse proxy if hosted outside the development server.

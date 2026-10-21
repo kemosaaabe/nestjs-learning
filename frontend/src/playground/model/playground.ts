@@ -286,15 +286,10 @@ export function initializePlayground() {
 
   taskForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    if (!titleInput.value.trim()) {
-      titleInput.setCustomValidity('Enter a task title.');
-      titleInput.reportValidity();
-      return;
-    }
     void perform(async () => {
       const body = {
-        title: titleInput.value.trim(),
-        description: descriptionInput.value.trim(),
+        title: titleInput.value,
+        description: descriptionInput.value,
         userId: assigneeSelect.value ? Number(assigneeSelect.value) : null,
         ...(editingTaskId === null ? {} : { status: statusSelect.value }),
       };
@@ -312,23 +307,16 @@ export function initializePlayground() {
       await refreshData(false);
     });
   });
-  titleInput.addEventListener('input', () => titleInput.setCustomValidity(''));
 
   const nameInput = element<HTMLInputElement>('#user-name');
-  nameInput.addEventListener('input', () => nameInput.setCustomValidity(''));
   userForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    if (!nameInput.value.trim()) {
-      nameInput.setCustomValidity('Enter a name.');
-      nameInput.reportValidity();
-      return;
-    }
     void perform(async () => {
       await request<User>('/users', {
         method: 'POST',
         body: JSON.stringify({
-          name: nameInput.value.trim(),
-          email: element<HTMLInputElement>('#user-email').value.trim(),
+          name: nameInput.value,
+          email: element<HTMLInputElement>('#user-email').value,
         }),
       });
       userForm.reset();

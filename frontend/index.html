@@ -63,14 +63,12 @@
             <h2 id="task-form-title">Create a task</h2>
           </div>
           <p class="hint">Give something a place on your list.</p>
-          <form id="task-form">
+          <form id="task-form" novalidate>
             <label for="task-title">Title</label>
             <input
               id="task-title"
               name="title"
               placeholder="What needs to get done?"
-              required
-              maxlength="200"
             />
             <label for="task-description">Description</label>
             <textarea
@@ -116,16 +114,14 @@
             <select id="task-filter">
               <option value="">All users</option>
             </select>
-            <form id="task-lookup" class="lookup">
+            <form id="task-lookup" class="lookup" novalidate>
               <label for="task-id" class="sr-only">Task ID</label
-              ><input
-                id="task-id"
-                type="number"
-                min="1"
-                step="1"
-                placeholder="Task ID"
-                required
-              /><button type="submit" class="secondary">Inspect</button>
+              ><input id="task-id" placeholder="Task ID" /><button
+                type="submit"
+                class="secondary"
+              >
+                Inspect
+              </button>
             </form>
           </div>
           <div id="task-list" class="resource-list"></div>
@@ -145,22 +141,14 @@
             <h2>Create a user</h2>
           </div>
           <p class="hint">Add a person, then assign them a task.</p>
-          <form id="user-form">
+          <form id="user-form" novalidate>
             <label for="user-name">Name</label>
-            <input
-              id="user-name"
-              name="name"
-              placeholder="Alex Johnson"
-              required
-              maxlength="100"
-            />
+            <input id="user-name" name="name" placeholder="Alex Johnson" />
             <label for="user-email">Email address</label>
             <input
               id="user-email"
               name="email"
-              type="email"
               placeholder="alex@example.com"
-              required
             />
             <button type="submit" class="primary">
               Create user <span>↗</span>
@@ -176,16 +164,14 @@
             </div>
             <span class="small-label">LIVE API DATA</span>
           </div>
-          <form id="user-lookup" class="lookup user-lookup">
+          <form id="user-lookup" class="lookup user-lookup" novalidate>
             <label for="user-id" class="sr-only">User ID</label
-            ><input
-              id="user-id"
-              type="number"
-              min="1"
-              step="1"
-              placeholder="User ID"
-              required
-            /><button type="submit" class="secondary">Inspect</button>
+            ><input id="user-id" placeholder="User ID" /><button
+              type="submit"
+              class="secondary"
+            >
+              Inspect
+            </button>
           </form>
           <div id="user-list" class="resource-list"></div>
         </div>
