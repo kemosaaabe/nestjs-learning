@@ -7,12 +7,14 @@ import {
   Patch,
   Delete,
   UseFilters,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service.js';
 import type {
   CreateTaskDto,
   UpdateTaskDto,
 } from './interfaces/tasks.interface.js';
+import { PositiveIntPipe } from '../common/pipes/positive-int.pipe.js';
 
 @Controller('tasks')
 export class TaskController {
@@ -24,8 +26,8 @@ export class TaskController {
   }
 
   @Get(':id')
-  getTask(@Param('id') taskId: string) {
-    return this.tasksService.getTask(Number(taskId));
+  getTask(@Param('id', PositiveIntPipe) taskId: number) {
+    return this.tasksService.getTask(taskId);
   }
 
   @Post()
@@ -34,12 +36,15 @@ export class TaskController {
   }
 
   @Patch(':id')
-  updateTask(@Body() task: UpdateTaskDto, @Param('id') taskId: string) {
-    return this.tasksService.updateTask(Number(taskId), task);
+  updateTask(
+    @Body() task: UpdateTaskDto,
+    @Param('id', ParseIntPipe) taskId: number,
+  ) {
+    return this.tasksService.updateTask(taskId, task);
   }
 
   @Delete(':id')
-  deleteTask(@Param('id') taskId: string) {
-    return this.tasksService.deleteTask(Number(taskId));
+  deleteTask(@Param('id', ParseIntPipe) taskId: number) {
+    return this.tasksService.deleteTask(taskId);
   }
 }
