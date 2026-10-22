@@ -15,6 +15,7 @@ export function initializePlayground() {
 
   const taskForm = element<HTMLFormElement>('#task-form');
   const userForm = element<HTMLFormElement>('#user-form');
+  const apiKeyInput = element<HTMLInputElement>('#api-key');
   const titleInput = element<HTMLInputElement>('#task-title');
   const descriptionInput = element<HTMLTextAreaElement>('#task-description');
   const assigneeSelect = element<HTMLSelectElement>('#task-user');
@@ -43,9 +44,13 @@ export function initializePlayground() {
     const method = options.method || 'GET';
     let response: Response;
     try {
+      const headers = new Headers(options.headers);
+      if (!headers.has('Content-Type'))
+        headers.set('Content-Type', 'application/json');
+      headers.set('X-API-Key', apiKeyInput.value);
       response = await fetch(`${apiPrefix}${path}`, {
         ...options,
-        headers: { 'Content-Type': 'application/json', ...options.headers },
+        headers,
       });
     } catch {
       if (record) {

@@ -25,6 +25,20 @@
         </div>
       </header>
 
+      <div class="panel api-settings">
+        <label for="api-key">X-API-Key</label>
+        <input
+          id="api-key"
+          type="text"
+          placeholder="Enter your API key"
+          autocomplete="off"
+          aria-describedby="api-key-hint"
+        />
+        <p id="api-key-hint" class="hint">
+          Sent with every API request. After entering a key, click Refresh data.
+        </p>
+      </div>
+
       <div class="toolbar">
         <div class="tabs" role="tablist" aria-label="Resources">
           <button

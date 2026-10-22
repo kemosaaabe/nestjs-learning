@@ -102,6 +102,13 @@ h1 span {
   border-radius: 50%;
   background: #86efac;
 }
+.api-settings {
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.api-settings .hint {
+  margin: 10px 0 0;
+}
 .toolbar {
   display: flex;
   justify-content: space-between;

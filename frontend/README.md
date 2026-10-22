@@ -20,6 +20,8 @@ npm run dev
 
 Open the local URL printed by Vite, normally http://127.0.0.1:5173.
 
+Enter your API key in the global `X-API-Key` field and click **Refresh data**. The current value is sent in the `X-API-Key` header with every users and tasks API request. The key is cleared when you reload the page.
+
 The development server proxies `/api` to `http://127.0.0.1:3000`, so no backend CORS changes are needed. For another backend address, run `API_URL=http://127.0.0.1:4000 npm run dev`.
 
 - Create and list users; inspect a user by ID.
