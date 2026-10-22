@@ -109,6 +109,9 @@ h1 span {
 .api-settings .hint {
   margin: 10px 0 0;
 }
+.api-settings input + label {
+  margin-top: 20px;
+}
 .toolbar {
   display: flex;
   justify-content: space-between;

@@ -32,10 +32,19 @@
           type="text"
           placeholder="Enter your API key"
           autocomplete="off"
-          aria-describedby="api-key-hint"
+          aria-describedby="api-headers-hint"
         />
-        <p id="api-key-hint" class="hint">
-          Sent with every API request. After entering a key, click Refresh data.
+        <label for="api-role">x-role</label>
+        <input
+          id="api-role"
+          type="text"
+          placeholder="Enter a role"
+          autocomplete="off"
+          aria-describedby="api-headers-hint"
+        />
+        <p id="api-headers-hint" class="hint">
+          Both values are sent with every API request. After changing them,
+          click Refresh data.
         </p>
       </div>
 
