@@ -16,6 +16,9 @@ import type { CreateTaskDto } from './schemas/create-task.schema.js';
 import type { UpdateTaskDto } from './schemas/update-task.schema.js';
 import { createTaskSchema } from './schemas/create-task.schema.js';
 import { updateTaskSchema } from './schemas/update-task.schema.js';
+import { Roles } from '../common/roles/roles.decorator.js';
+import { RolesGuard } from '../common/guards/roles.guard.js';
+import { rolesMap } from '../common/types/roles.js';
 
 @Controller('tasks')
 export class TaskController {
@@ -32,13 +35,15 @@ export class TaskController {
   }
 
   @Post()
-  @UseGuards(ApiKeyGuard)
+  @Roles([rolesMap.admin, rolesMap.user])
+  @UseGuards(ApiKeyGuard, RolesGuard)
   createTask(@Body({ schema: createTaskSchema }) taskDto: CreateTaskDto) {
     return this.tasksService.createTask(taskDto);
   }
 
   @Patch(':id')
-  @UseGuards(ApiKeyGuard)
+  @Roles([rolesMap.admin])
+  @UseGuards(ApiKeyGuard, RolesGuard)
   updateTask(
     @Body({ schema: updateTaskSchema }) task: UpdateTaskDto,
     @Param('id', ParseIntPipe) taskId: number,
@@ -47,7 +52,8 @@ export class TaskController {
   }
 
   @Delete(':id')
-  @UseGuards(ApiKeyGuard)
+  @Roles([rolesMap.admin])
+  @UseGuards(ApiKeyGuard, RolesGuard)
   deleteTask(@Param('id', ParseIntPipe) taskId: number) {
     return this.tasksService.deleteTask(taskId);
   }
