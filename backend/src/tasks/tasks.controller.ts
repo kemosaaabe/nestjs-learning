@@ -20,11 +20,12 @@ import { Roles } from '../common/roles/roles.decorator.js';
 import { RolesGuard } from '../common/guards/roles.guard.js';
 import { rolesMap } from '../common/types/roles.js';
 import { LoggingInterceptor } from '../common/interceptors/logging.interceptor.js';
+import { TransformInterceptor } from '../common/interceptors/transform.interceptor.js';
 
 @Controller('tasks')
 @Roles([rolesMap.admin])
 @UseGuards(RolesGuard)
-@UseInterceptors(LoggingInterceptor)
+@UseInterceptors(LoggingInterceptor, TransformInterceptor)
 export class TaskController {
   constructor(private readonly tasksService: TasksService) {}
 
