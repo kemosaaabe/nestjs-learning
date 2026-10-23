@@ -21,11 +21,16 @@ import { RolesGuard } from '../common/guards/roles.guard.js';
 import { rolesMap } from '../common/types/roles.js';
 import { LoggingInterceptor } from '../common/interceptors/logging.interceptor.js';
 import { TransformInterceptor } from '../common/interceptors/transform.interceptor.js';
+import { ErrorLoggingInterceptor } from '../common/interceptors/error-logging.interceptor.js';
 
 @Controller('tasks')
 @Roles([rolesMap.admin])
 @UseGuards(RolesGuard)
-@UseInterceptors(LoggingInterceptor, TransformInterceptor)
+@UseInterceptors(
+  LoggingInterceptor,
+  TransformInterceptor,
+  ErrorLoggingInterceptor,
+)
 export class TaskController {
   constructor(private readonly tasksService: TasksService) {}
 
