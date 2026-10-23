@@ -8,6 +8,7 @@ import {
   Delete,
   ParseIntPipe,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { PositiveIntPipe } from '../common/pipes/positive-int.pipe.js';
 import { TasksService } from './tasks.service.js';
@@ -18,10 +19,12 @@ import { updateTaskSchema } from './schemas/update-task.schema.js';
 import { Roles } from '../common/roles/roles.decorator.js';
 import { RolesGuard } from '../common/guards/roles.guard.js';
 import { rolesMap } from '../common/types/roles.js';
+import { LoggingInterceptor } from '../common/interceptors/logging.interceptor.js';
 
 @Controller('tasks')
 @Roles([rolesMap.admin])
 @UseGuards(RolesGuard)
+@UseInterceptors(LoggingInterceptor)
 export class TaskController {
   constructor(private readonly tasksService: TasksService) {}
 
