@@ -5,7 +5,7 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import type { Request } from 'express';
-import { tap } from 'rxjs';
+import { finalize } from 'rxjs';
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
@@ -19,7 +19,7 @@ export class LoggingInterceptor implements NestInterceptor {
     console.log(`[START] ${controllerMethodString}`);
 
     return next.handle().pipe(
-      tap(() => {
+      finalize(() => {
         console.log(
           `[END] ${controllerMethodString} — ${Date.now() - startTime}ms`,
         );
