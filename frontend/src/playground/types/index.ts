@@ -1,3 +1,7 @@
+export interface ApiResponse<T> {
+  data: T;
+}
+
 export interface User {
   id: number;
   name: string;

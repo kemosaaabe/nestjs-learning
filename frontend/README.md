@@ -29,6 +29,8 @@ The development server proxies `/api` to `http://127.0.0.1:3000`, so no backend 
 - Change task status and view a user's tasks.
 - See the request method, endpoint, HTTP status, and JSON response.
 
+Responses from `/tasks` and `/tasks/:id` are unwrapped from `{ data: ... }` for the interface. The API response panel displays the full response. Users endpoints, including `/users/:id/tasks`, return their data directly.
+
 Forms intentionally skip frontend validation and preserve entered text so you can test backend validation with empty, negative, or malformed values. An empty lookup ID requests `/tasks/` or `/users/`, which are collection routes rather than routes with an ID parameter.
 
 Data is stored in memory by the backend and resets when it restarts. User editing and deletion are unavailable because the API does not expose those endpoints.

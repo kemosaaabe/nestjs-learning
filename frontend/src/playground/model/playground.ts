@@ -1,5 +1,5 @@
 import { apiPrefix, statusLabels } from '../constants/index.js';
-import type { Task, User } from '../types/index.js';
+import type { ApiResponse, Task, User } from '../types/index.js';
 
 function element<T extends HTMLElement>(selector: string): T {
   const selected = document.querySelector<T>(selector);
@@ -66,7 +66,7 @@ export function initializePlayground() {
       );
     }
     const body = await response.text();
-    const data: T =
+    const data =
       body && response.headers.get('content-type')?.includes('application/json')
         ? JSON.parse(body)
         : null;
@@ -84,6 +84,10 @@ export function initializePlayground() {
       throw new Error(
         `${method} ${path} failed (${response.status}). See the API response below.`,
       );
+    if (data !== null && (path === '/tasks' || path.startsWith('/tasks/'))) {
+      const taskResponse: ApiResponse<T> = data;
+      return taskResponse.data;
+    }
     return data;
   }
 
