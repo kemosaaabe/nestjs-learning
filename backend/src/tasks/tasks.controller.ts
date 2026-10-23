@@ -22,6 +22,7 @@ import { rolesMap } from '../common/types/roles.js';
 import { LoggingInterceptor } from '../common/interceptors/logging.interceptor.js';
 import { TransformInterceptor } from '../common/interceptors/transform.interceptor.js';
 import { ErrorLoggingInterceptor } from '../common/interceptors/error-logging.interceptor.js';
+import { TimeoutInterceptor } from '../common/interceptors/timeout.interceptor.js';
 
 @Controller('tasks')
 @Roles([rolesMap.admin])
@@ -42,7 +43,10 @@ export class TaskController {
 
   @Get(':id')
   @Roles([rolesMap.admin, rolesMap.manager, rolesMap.user])
-  getTask(@Param('id', PositiveIntPipe) taskId: number) {
+  @UseInterceptors(TimeoutInterceptor)
+  async getTask(@Param('id', PositiveIntPipe) taskId: number) {
+    await new Promise((resolve) => setTimeout(resolve, 10000));
+
     return this.tasksService.getTask(taskId);
   }
 
