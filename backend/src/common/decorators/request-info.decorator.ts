@@ -7,14 +7,20 @@ export interface IRequestInfo {
   userAgent: string;
 }
 
-export const RequestInfo = createParamDecorator(
-  (_data, context: ExecutionContext): IRequestInfo => {
+export const RequestInfo = createParamDecorator<keyof IRequestInfo>(
+  (data, context: ExecutionContext): IRequestInfo | string => {
     const request = context.switchToHttp().getRequest<Request>();
 
-    return {
+    const requestInfo: IRequestInfo = {
       method: request.method,
       path: request.path,
       userAgent: request.headers['user-agent'] || '',
     };
+
+    if (data) {
+      return requestInfo[data];
+    }
+
+    return requestInfo;
   },
 );

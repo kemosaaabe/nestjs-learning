@@ -42,8 +42,12 @@ export class TaskController {
 
   @Get()
   @Roles([rolesMap.admin, rolesMap.manager, rolesMap.user])
-  getTasks(@RequestInfo() info: IRequestInfo) {
-    console.log({ info });
+  getTasks(
+    @RequestInfo('method') method: string,
+    @RequestInfo('path') path: string,
+    @RequestInfo() info: IRequestInfo,
+  ) {
+    console.log({ method, path, info });
 
     return this.tasksService.getTasks();
   }
