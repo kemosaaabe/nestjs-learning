@@ -7,12 +7,9 @@ import {
   Patch,
   Delete,
   ParseIntPipe,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { PositiveIntPipe } from '../common/pipes/positive-int.pipe.js';
-import { Roles } from '../common/roles/roles.decorator.js';
-import { RolesGuard } from '../common/guards/roles.guard.js';
 import { rolesMap } from '../common/types/roles.js';
 import { LoggingInterceptor } from '../common/interceptors/logging.interceptor.js';
 import { TransformInterceptor } from '../common/interceptors/transform.interceptor.js';
@@ -28,10 +25,10 @@ import type { UpdateTaskDto } from './schemas/update-task.schema.js';
 import { createTaskSchema } from './schemas/create-task.schema.js';
 import { updateTaskSchema } from './schemas/update-task.schema.js';
 import { CachedTaskInterceptor } from './interceptors/cache.interceptor.js';
+import { Authorize } from '../common/decorators/authorize.decorator.js';
 
 @Controller('tasks')
-@Roles([rolesMap.admin])
-@UseGuards(RolesGuard)
+@Authorize([rolesMap.admin])
 @UseInterceptors(
   LoggingInterceptor,
   TransformInterceptor,
@@ -41,7 +38,7 @@ export class TaskController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Get()
-  @Roles([rolesMap.admin, rolesMap.manager, rolesMap.user])
+  @Authorize([rolesMap.admin, rolesMap.manager, rolesMap.user])
   getTasks(
     @RequestInfo('method') method: string,
     @RequestInfo('path') path: string,
@@ -53,20 +50,20 @@ export class TaskController {
   }
 
   @Get(':id')
-  @Roles([rolesMap.admin, rolesMap.manager, rolesMap.user])
+  @Authorize([rolesMap.admin, rolesMap.manager, rolesMap.user])
   @UseInterceptors(TimeoutInterceptor, CachedTaskInterceptor)
   getTask(@Param('id', PositiveIntPipe) taskId: number) {
     return this.tasksService.getTask(taskId);
   }
 
   @Post()
-  @Roles([rolesMap.admin, rolesMap.manager, rolesMap.user])
+  @Authorize([rolesMap.admin, rolesMap.manager, rolesMap.user])
   createTask(@Body({ schema: createTaskSchema }) taskDto: CreateTaskDto) {
     return this.tasksService.createTask(taskDto);
   }
 
   @Patch(':id')
-  @Roles([rolesMap.admin, rolesMap.manager])
+  @Authorize([rolesMap.admin, rolesMap.manager])
   updateTask(
     @Body({ schema: updateTaskSchema }) task: UpdateTaskDto,
     @Param('id', ParseIntPipe) taskId: number,
