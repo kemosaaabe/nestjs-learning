@@ -11,11 +11,6 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { PositiveIntPipe } from '../common/pipes/positive-int.pipe.js';
-import { TasksService } from './tasks.service.js';
-import type { CreateTaskDto } from './schemas/create-task.schema.js';
-import type { UpdateTaskDto } from './schemas/update-task.schema.js';
-import { createTaskSchema } from './schemas/create-task.schema.js';
-import { updateTaskSchema } from './schemas/update-task.schema.js';
 import { Roles } from '../common/roles/roles.decorator.js';
 import { RolesGuard } from '../common/guards/roles.guard.js';
 import { rolesMap } from '../common/types/roles.js';
@@ -23,6 +18,15 @@ import { LoggingInterceptor } from '../common/interceptors/logging.interceptor.j
 import { TransformInterceptor } from '../common/interceptors/transform.interceptor.js';
 import { ErrorLoggingInterceptor } from '../common/interceptors/error-logging.interceptor.js';
 import { TimeoutInterceptor } from '../common/interceptors/timeout.interceptor.js';
+import {
+  RequestInfo,
+  type IRequestInfo,
+} from '../common/decorators/request-info.decorator.js';
+import { TasksService } from './tasks.service.js';
+import type { CreateTaskDto } from './schemas/create-task.schema.js';
+import type { UpdateTaskDto } from './schemas/update-task.schema.js';
+import { createTaskSchema } from './schemas/create-task.schema.js';
+import { updateTaskSchema } from './schemas/update-task.schema.js';
 import { CachedTaskInterceptor } from './interceptors/cache.interceptor.js';
 
 @Controller('tasks')
@@ -38,7 +42,9 @@ export class TaskController {
 
   @Get()
   @Roles([rolesMap.admin, rolesMap.manager, rolesMap.user])
-  getTasks() {
+  getTasks(@RequestInfo() info: IRequestInfo) {
+    console.log({ info });
+
     return this.tasksService.getTasks();
   }
 
