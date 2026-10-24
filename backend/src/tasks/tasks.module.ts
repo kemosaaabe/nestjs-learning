@@ -5,7 +5,12 @@ import { LoggerModule } from '../logger/logger.module.js';
 import { RequestLoggerMiddleware } from './middleware/tasks.middleware.js';
 
 @Module({
-  imports: [LoggerModule.register({ prefix: 'TASKS_APP', enabled: true })],
+  imports: [
+    LoggerModule.forRoot({
+      prefix: 'TASKS_APP',
+      enabled: true,
+    }),
+  ],
   providers: [TasksService],
   controllers: [TaskController],
   exports: [TasksService],

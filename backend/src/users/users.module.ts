@@ -7,7 +7,9 @@ import { LoggerModule } from '../logger/logger.module.js';
 @Module({
   imports: [
     TasksModule,
-    LoggerModule.register({ prefix: 'USERS_APP', enabled: false }),
+    LoggerModule.forRootAsync({
+      useFactory: () => ({ prefix: 'USERS_APP', enabled: true }),
+    }),
   ],
   providers: [UsersService],
   controllers: [UsersController],

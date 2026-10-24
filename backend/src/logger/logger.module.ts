@@ -1,20 +1,9 @@
-import { DynamicModule, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { LoggerService } from './logger.service.js';
-import type { LoggerConfig } from './interfaces/logger.interface.js';
+import { LoggerConfigurableModuleClass } from './logger.module-definition.js';
 
-@Module({})
-export class LoggerModule {
-  static register(config: LoggerConfig): DynamicModule {
-    return {
-      module: LoggerModule,
-      providers: [
-        {
-          provide: 'LOGGER_CONFIG',
-          useValue: config,
-        },
-        LoggerService,
-      ],
-      exports: [LoggerService],
-    };
-  }
-}
+@Module({
+  providers: [LoggerService],
+  exports: [LoggerService],
+})
+export class LoggerModule extends LoggerConfigurableModuleClass {}

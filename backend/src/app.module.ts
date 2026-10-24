@@ -13,7 +13,7 @@ import { DatabaseModule } from './database/database.module.js';
     TasksModule,
     NotificationModule,
     DatabaseModule,
-    LoggerModule.register({ prefix: 'HTTP_ERRORS', enabled: true }),
+    LoggerModule.forRoot({ prefix: 'HTTP_ERRORS', enabled: true }),
   ],
   providers: [{ provide: APP_FILTER, useClass: HttpExceptionFilter }],
 })
