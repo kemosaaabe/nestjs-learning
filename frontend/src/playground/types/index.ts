@@ -1,3 +1,5 @@
+export type ResourceTab = 'tasks' | 'users' | 'notifications';
+
 export interface ApiResponse<T> {
   data: T;
 }

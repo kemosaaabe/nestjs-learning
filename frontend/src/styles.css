@@ -114,6 +114,8 @@ h1 span {
 }
 .toolbar {
   display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   justify-content: space-between;
   align-items: center;
   padding-bottom: 16px;
@@ -121,6 +123,7 @@ h1 span {
 }
 .tabs {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 .tabs button {
@@ -181,6 +184,9 @@ h1 span {
 }
 .form-panel {
   padding: 26px;
+}
+.notification-panel {
+  max-width: 600px;
 }
 .section-heading {
   display: flex;

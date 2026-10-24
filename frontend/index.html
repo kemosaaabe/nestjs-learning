@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="A local playground for the tasks and users API."
+      content="A local playground for the tasks, users, and notifications API."
     />
-    <title>Tasks & users · API playground</title>
+    <title>Tasks, users & notifications · API playground</title>
     <link rel="stylesheet" href="/src/styles.css" />
   </head>
   <body>
@@ -17,7 +17,8 @@
           <p class="eyebrow">LOCAL DEVELOPMENT / NESTJS</p>
           <h1>API playground<span>.</span></h1>
           <p class="subtitle">
-            A little workspace to put your users and tasks API to work.
+            A little workspace to put your users, tasks, and notifications API
+            to work.
           </p>
         </div>
         <div class="connection">
@@ -66,6 +67,15 @@
             tabindex="-1"
           >
             Users <span id="user-count">0</span>
+          </button>
+          <button
+            id="notifications-tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="notifications-panel"
+            tabindex="-1"
+          >
+            Notifications
           </button>
         </div>
         <button id="refresh" class="secondary">↻ Refresh data</button>
@@ -198,6 +208,35 @@
           </form>
           <div id="user-list" class="resource-list"></div>
         </div>
+      </section>
+
+      <section
+        id="notifications-panel"
+        role="tabpanel"
+        aria-labelledby="notifications-tab"
+        class="panel form-panel notification-panel"
+        hidden
+      >
+        <div class="section-heading">
+          <span class="section-number">01</span>
+          <h2>Send a notification</h2>
+        </div>
+        <p class="hint">
+          Write a message to send through your notification service.
+        </p>
+        <form id="notification-form" novalidate>
+          <label for="notification-message">Message</label>
+          <textarea
+            id="notification-message"
+            name="message"
+            placeholder="Write your message…"
+            rows="4"
+          ></textarea>
+          <button type="submit" class="primary">
+            Send message <span>↗</span>
+          </button>
+        </form>
+        <p class="endpoint">POST /notifications</p>
       </section>
 
       <section class="response-panel" aria-labelledby="response-heading">

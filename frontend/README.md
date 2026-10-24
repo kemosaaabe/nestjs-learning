@@ -1,6 +1,6 @@
 # API playground
 
-A small TypeScript frontend for the existing NestJS users and tasks API.
+A small TypeScript frontend for the existing NestJS users, tasks, and notifications API.
 
 Start the backend in one terminal:
 
@@ -20,13 +20,14 @@ npm run dev
 
 Open the local URL printed by Vite, normally http://127.0.0.1:5173.
 
-Enter your API key and role in the global `X-API-Key` and `x-role` fields, then click **Refresh data**. Their current values are sent in the corresponding headers with every users and tasks API request, including an empty `x-role` header when no role is entered. Both fields are cleared when you reload the page.
+Enter your API key and role in the global `X-API-Key` and `x-role` fields, then click **Refresh data**. Their current values are sent in the corresponding headers with every API request, including an empty `x-role` header when no role is entered. Both fields are cleared when you reload the page.
 
 The development server proxies `/api` to `http://127.0.0.1:3000`, so no backend CORS changes are needed. For another backend address, run `API_URL=http://127.0.0.1:4000 npm run dev`.
 
 - Create and list users; inspect a user by ID.
 - Create, inspect, edit, assign, and delete tasks.
 - Change task status and view a user's tasks.
+- Send a message from the Notifications tab using `POST /notifications` with `{ "message": "..." }`.
 - See the request method, endpoint, HTTP status, and JSON response.
 
 Responses from `/tasks` and `/tasks/:id` are unwrapped from `{ data: ... }` for the interface. The API response panel displays the full response. Users endpoints, including `/users/:id/tasks`, return their data directly.

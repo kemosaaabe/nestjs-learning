@@ -1,5 +1,5 @@
-import { apiPrefix, statusLabels } from '../constants/index.js';
-import type { ApiResponse, Task, User } from '../types/index.js';
+import { apiPrefix, resourceTabs, statusLabels } from '../constants/index.js';
+import type { ApiResponse, ResourceTab, Task, User } from '../types/index.js';
 
 function element<T extends HTMLElement>(selector: string): T {
   const selected = document.querySelector<T>(selector);
@@ -112,8 +112,8 @@ export function initializePlayground() {
     }
   }
 
-  function selectTab(resource: 'tasks' | 'users') {
-    for (const name of ['tasks', 'users']) {
+  function selectTab(resource: ResourceTab) {
+    for (const name of resourceTabs) {
       const selected = resource === name;
       const tab = element<HTMLButtonElement>(`#${name}-tab`);
       tab.setAttribute('aria-selected', String(selected));
@@ -335,23 +335,36 @@ export function initializePlayground() {
     });
   });
 
-  for (const resource of ['tasks', 'users']) {
+  const notificationForm = element<HTMLFormElement>('#notification-form');
+  const messageInput = element<HTMLTextAreaElement>('#notification-message');
+  notificationForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void perform(async () => {
+      await request<void>('/notifications', {
+        method: 'POST',
+        body: JSON.stringify({ message: messageInput.value }),
+      });
+      notificationForm.reset();
+    });
+  });
+
+  for (const resource of resourceTabs) {
     const tab = element<HTMLButtonElement>(`#${resource}-tab`);
-    tab.addEventListener('click', () =>
-      selectTab(resource === 'tasks' ? 'tasks' : 'users'),
-    );
+    tab.addEventListener('click', () => selectTab(resource));
     tab.addEventListener('keydown', (event) => {
       if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key))
         return;
       event.preventDefault();
-      const next =
+      const nextIndex =
         event.key === 'Home'
-          ? 'tasks'
+          ? 0
           : event.key === 'End'
-            ? 'users'
-            : resource === 'tasks'
-              ? 'users'
-              : 'tasks';
+            ? resourceTabs.length - 1
+            : (resourceTabs.indexOf(resource) +
+                (event.key === 'ArrowRight' ? 1 : -1) +
+                resourceTabs.length) %
+              resourceTabs.length;
+      const next = resourceTabs[nextIndex];
       selectTab(next);
       element(`#${next}-tab`).focus();
     });
