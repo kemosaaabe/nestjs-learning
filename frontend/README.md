@@ -20,7 +20,7 @@ npm run dev
 
 Open the local URL printed by Vite, normally http://127.0.0.1:5173.
 
-Enter your API key and role in the global `X-API-Key` and `x-role` fields, then click **Refresh data**. Their current values are sent in the corresponding headers with every API request, including an empty `x-role` header when no role is entered. Both fields are cleared when you reload the page.
+Enter your API key in the global `X-API-Key` field and change the `x-role` field if needed, then click **Refresh data**. The role defaults to `user`. Their current values are sent in the corresponding headers with every API request, including an empty `x-role` header when no role is entered. Reloading the page clears the API key and resets the role to `user`.
 
 The development server proxies `/api` to `http://127.0.0.1:3000`, so no backend CORS changes are needed. For another backend address, run `API_URL=http://127.0.0.1:4000 npm run dev`.
 
