@@ -3,6 +3,7 @@ import { TasksService } from './tasks.service.js';
 import { TaskController } from './tasks.controller.js';
 import { LoggerModule } from '../logger/logger.module.js';
 import { RequestLoggerMiddleware } from './middleware/tasks.middleware.js';
+import { LifecycleService } from '../lifecycle/lifecycle.service.js';
 
 @Module({
   imports: [
@@ -11,7 +12,7 @@ import { RequestLoggerMiddleware } from './middleware/tasks.middleware.js';
       enabled: true,
     }),
   ],
-  providers: [TasksService],
+  providers: [TasksService, LifecycleService],
   controllers: [TaskController],
   exports: [TasksService],
 })

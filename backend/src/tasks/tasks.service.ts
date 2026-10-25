@@ -2,13 +2,18 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import type { CreateTaskDto } from './schemas/create-task.schema.js';
 import type { UpdateTaskDto } from './schemas/update-task.schema.js';
 import type { Task } from './interfaces/tasks.interface.js';
+import { LifecycleService } from '../lifecycle/lifecycle.service.js';
 
 @Injectable()
 export class TasksService {
+  constructor(private readonly lifecycleService: LifecycleService) {}
+
   private tasks: Task[] = [];
   private taskNextId = 1;
 
   getTasks() {
+    this.lifecycleService.getLifecycleMessage();
+
     return this.tasks;
   }
 
