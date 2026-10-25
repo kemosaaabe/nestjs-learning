@@ -1,8 +1,8 @@
 import { vi } from 'vitest';
 import { Test } from '@nestjs/testing';
+import { NotFoundException } from '@nestjs/common';
 import { TasksService } from './tasks.service.js';
 import { LifecycleService } from '../lifecycle/lifecycle.service.js';
-import { NotFoundException } from '@nestjs/common';
 
 describe('TasksService', () => {
   let tasksService: TasksService;
