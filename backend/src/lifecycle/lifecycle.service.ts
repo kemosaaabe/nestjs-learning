@@ -23,7 +23,7 @@ export class LifecycleService
   async onModuleInit() {
     console.log('Lifecycle async onModuleInit started.');
 
-    await new Promise((resolve) => setTimeout(resolve, 7000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     console.log('Lifecycle async onModuleInit ended.');
   }
